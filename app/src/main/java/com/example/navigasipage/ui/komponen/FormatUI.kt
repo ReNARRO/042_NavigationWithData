@@ -8,7 +8,7 @@ import androidx.compose.ui.res.stringResource
 import com.example.navigasipage.R
 
 @Composable
-fun FormatTabelMerge(subtotal: String, modifier: Modifier){
+fun FormatTabelHarga(subtotal: String, modifier: Modifier){
     Text(
         text = stringResource(R.string.subtotal_price, subtotal),
         modifier = Modifier,
