@@ -35,7 +35,7 @@ fun HalamanSatu(
     onSelectionChange: (String) -> Unit,
     onConfirmButtonClicked: (Int) -> Unit,
     onNextButtonClicked: () -> Unit,
-    onCanceledClicked: () -> Unit,
+    onCanceledButtonClicked: () -> Unit,
     modifier: Modifier
 ){
     var rasaYgDipilih by rememberSaveable {
@@ -113,13 +113,13 @@ fun HalamanSatu(
                 verticalAlignment = Alignment.Bottom,
             ){
                 OutlinedButton(modifier = Modifier.weight(1f),
-                    onClick = { onCanceledClicked}) {
+                    onClick = { onCanceledButtonClicked}) {
                     Text(stringResource(id = R.string.cancel))
                 }
                 Button(
                     modifier = Modifier.weight(1f),
                     enabled = textJmlBeli.isNotEmpty(),
-                    onClick = { onCanceledClicked}
+                    onClick = { onCanceledButtonClicked}
                 ) {
                     Text(stringResource(R.string.next))
                 }
