@@ -22,34 +22,32 @@ import com.example.navigasipage.ui.komponen.FormatTabelHarga
 
 @Composable
 fun HalamanDua(
-    orderUIState: OrderUIState,
+    orderUiState: OrderUIState,
     onCancelButtonClicked: () -> Unit,
     modifier: Modifier = Modifier
-){
+) {
     val items = listOf(
-        Pair(stringResource(R.string.quantity), orderUIState.jumlah),
-        Pair(stringResource(R.string.flavor), orderUIState.rasa),
+        Pair(stringResource(R.string.quantity), orderUiState.jumlah),
+        Pair(stringResource(R.string.flavor), orderUiState.rasa)
     )
     Column(
-        modifier = modifier,
+        modifier = Modifier,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Column (
-            modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_medium)),
-            verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_small))
-        ){
-            items.forEach{ item ->
+        Column(
+            modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium)),
+            verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_small))
+        ) {
+            items.forEach { item ->
                 Column {
                     Text(item.first.uppercase())
                     Text(text = item.second.toString(), fontWeight = FontWeight.Bold)
                 }
-                Divider(thickness = dimensionResource(id = R.dimen.thickness_divider))
+                Divider(thickness = dimensionResource(R.dimen.thickness_divider))
             }
-            Spacer(modifier = Modifier
-                .height(dimensionResource(id = R.dimen.padding_small))
-            )
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_small)))
             FormatTabelHarga(
-                subtotal = orderUIState.harga,
+                subtotal = orderUiState.harga,
                 modifier = Modifier.align(Alignment.End)
             )
         }
@@ -70,5 +68,4 @@ fun HalamanDua(
             }
         }
     }
-
 }

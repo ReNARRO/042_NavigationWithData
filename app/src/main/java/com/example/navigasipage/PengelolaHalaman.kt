@@ -24,6 +24,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.navigasipage.data.DataSource.flavors
+import com.example.navigasipage.data.OrderUIState
 
 enum class PengelolaHalaman {
     Home,
@@ -58,9 +59,8 @@ fun ThaiTeaAppBar(
 @Composable
 fun ThaiTeaApp(
     viewModel: OrderViewModel = viewModel(),
-
     navController: NavHostController = rememberNavController()
-){
+) {
     Scaffold(
         topBar = {
             ThaiTeaAppBar(bisaNavigasiBack = false, navigasiUp = { /*TODO*/ })
@@ -71,36 +71,34 @@ fun ThaiTeaApp(
             navController = navController,
             startDestination = PengelolaHalaman.Home.name,
             modifier = Modifier.padding(innerPadding)
-        ){
+        ) {
             composable(route = PengelolaHalaman.Home.name) {
                 HalamanHome(onNextButtonLicked = {
                     navController.navigate(PengelolaHalaman.Rasa.name)
-                })
+                }
+                )
             }
             composable(route = PengelolaHalaman.Rasa.name) {
                 val context = LocalContext.current
                 HalamanSatu(
                     pilihanRasa = flavors.map { id -> context.resources.getString(id) },
-                    onSelectionChange = { viewModel.setRasa(it) },
+                    onSelectionChanged = { viewModel.setRasa(it) },
                     onConfirmButtonClicked = { viewModel.setJumlah(it) },
                     onNextButtonClicked = { navController.navigate(PengelolaHalaman.Summary.name) },
-                    onCanceledButtonClicked = {
+                    onCancelButtonClicked = {
                         cancelOrderAndNavigateToHome(
                             viewModel,
                             navController
                         )
-                    },
-                )
+                    })
             }
             composable(route = PengelolaHalaman.Summary.name) {
                 HalamanDua(
-                    orderUIState = uiState,
+                    orderUiState = uiState,
                     onCancelButtonClicked = { cancelOrderAndNavigateToRasa(navController) })
             }
         }
-
     }
-
 }
 private fun cancelOrderAndNavigateToHome(
     viewModel: OrderViewModel,

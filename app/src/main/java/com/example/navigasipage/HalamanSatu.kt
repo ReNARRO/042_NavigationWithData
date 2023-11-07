@@ -19,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -32,16 +33,16 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun HalamanSatu(
     pilihanRasa: List<String>,
-    onSelectionChange: (String) -> Unit,
+    onSelectionChanged: (String) -> Unit,
     onConfirmButtonClicked: (Int) -> Unit,
     onNextButtonClicked: () -> Unit,
-    onCanceledButtonClicked: () -> Unit,
+    onCancelButtonClicked: () -> Unit,
     modifier: Modifier = Modifier
-){
+) {
     var rasaYgDipilih by rememberSaveable {
         mutableStateOf("")
     }
-    var textJmlBeli by rememberSaveable {
+    var textJmlBeli by remember {
         mutableStateOf("")
     }
 
@@ -49,81 +50,82 @@ fun HalamanSatu(
         modifier = Modifier,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Column(modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium))) {
-            pilihanRasa.forEach{ item ->
-                Row(modifier = Modifier.selectable(
-                    selected = rasaYgDipilih == item,
-                    onClick ={
-                        rasaYgDipilih = item
-                        onSelectionChange(item)
-                    }
-                ),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    RadioButton(
+        Column(
+            modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium))
+        ) {
+            pilihanRasa.forEach { item ->
+                Row(
+                    modifier = Modifier.selectable(
                         selected = rasaYgDipilih == item,
                         onClick = {
                             rasaYgDipilih = item
-                            onSelectionChange(item)
+                            onSelectionChanged(item)
                         }
+                    ),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    RadioButton(selected = rasaYgDipilih == item, onClick = {
+                        rasaYgDipilih = item
+                        onSelectionChanged(item)
+                    }
                     )
                     Text(item)
                 }
             }
             Divider(
-                thickness = dimensionResource(id = R.dimen.thickness_divider),
-                modifier = Modifier.padding(bottom =
-                dimensionResource(id = R.dimen.padding_medium))
+                thickness = dimensionResource(R.dimen.thickness_divider),
+                modifier = Modifier.padding(bottom = dimensionResource(R.dimen.padding_medium))
             )
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(dimensionResource(id = R.dimen.padding_medium))
+                    .padding(dimensionResource(R.dimen.padding_medium))
                     .weight(1f, false),
-                horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_medium)),
+                horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_medium))
             ) {
                 OutlinedTextField(
                     value = textJmlBeli,
+                    onValueChange = {
+                        textJmlBeli = it
+                    },
                     singleLine = true,
                     shape = MaterialTheme.shapes.large,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     modifier = Modifier.width(150.dp),
-                    label = { Text(text = "Jumlah Order")},
-                    onValueChange = {textJmlBeli = it}
+                    label = { Text(text = "Jumlah Order") }
                 )
                 Button(
                     modifier = Modifier.weight(1f),
                     enabled = textJmlBeli.isNotEmpty(),
-                    onClick = { onConfirmButtonClicked(textJmlBeli.toInt())}
-                ) {
+                    onClick = { onConfirmButtonClicked(textJmlBeli.toInt()) })
+                {
                     Text(stringResource(R.string.confirm))
                 }
             }
             Divider(
-                thickness = dimensionResource(id = R.dimen.thickness_divider),
-                modifier = Modifier.padding(bottom =
-                dimensionResource(id = R.dimen.padding_medium))
+                thickness = dimensionResource(R.dimen.thickness_divider),
+                modifier = Modifier.padding(bottom = dimensionResource(R.dimen.padding_medium))
             )
-            Row (
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(dimensionResource(R.dimen.padding_medium))
                     .weight(1f, false),
                 horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_medium)),
-                verticalAlignment = Alignment.Bottom,
+                verticalAlignment = Alignment.Bottom
             ){
-                OutlinedButton(modifier = Modifier.weight(1f),
-                    onClick = { onCanceledButtonClicked}) {
-                    Text(stringResource(id = R.string.cancel))
+                OutlinedButton(modifier = Modifier.weight(1f),onClick = onCancelButtonClicked) {
+                    Text(text = stringResource(R.string.cancel))
                 }
                 Button(
                     modifier = Modifier.weight(1f),
                     enabled = textJmlBeli.isNotEmpty(),
-                    onClick = { onNextButtonClicked}
-                ) {
+                    onClick = onNextButtonClicked)
+                {
                     Text(stringResource(R.string.next))
                 }
             }
         }
+
     }
 }
