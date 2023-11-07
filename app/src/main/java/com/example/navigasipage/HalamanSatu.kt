@@ -36,7 +36,7 @@ fun HalamanSatu(
     onConfirmButtonClicked: (Int) -> Unit,
     onNextButtonClicked: () -> Unit,
     onCanceledButtonClicked: () -> Unit,
-    modifier: Modifier
+    modifier: Modifier = Modifier
 ){
     var rasaYgDipilih by rememberSaveable {
         mutableStateOf("")
@@ -107,7 +107,7 @@ fun HalamanSatu(
             Row (
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(dimensionResource(id = R.dimen.padding_medium))
+                    .padding(dimensionResource(R.dimen.padding_medium))
                     .weight(1f, false),
                 horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_medium)),
                 verticalAlignment = Alignment.Bottom,
@@ -119,7 +119,7 @@ fun HalamanSatu(
                 Button(
                     modifier = Modifier.weight(1f),
                     enabled = textJmlBeli.isNotEmpty(),
-                    onClick = { onCanceledButtonClicked}
+                    onClick = { onNextButtonClicked}
                 ) {
                     Text(stringResource(R.string.next))
                 }

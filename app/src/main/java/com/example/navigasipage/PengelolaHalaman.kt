@@ -90,7 +90,6 @@ fun ThaiTeaApp(
                             navController
                         )
                     },
-                    modifier = Modifier
                 )
             }
             composable(route = PengelolaHalaman.Summary.name) {
