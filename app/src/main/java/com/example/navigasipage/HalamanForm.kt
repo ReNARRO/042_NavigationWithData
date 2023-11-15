@@ -88,7 +88,18 @@ fun HalamanForm(
                 shape = MaterialTheme.shapes.large,
                 modifier = Modifier.fillMaxWidth(),
             )
-
+            Spacer(modifier = Modifier.padding(16.dp))
+            Row (
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ){
+                Button(onClick = onCancelButtonClicked) {
+                    Text(stringResource(id = R.string.cancel))
+                }
+                Button(onClick = { onSubmitButtonClicked(listData) }, enabled = nama.isNotEmpty()) {
+                    Text(stringResource(id = R.string.btn_submit))
+                }
+            }
         }
     }
 }
