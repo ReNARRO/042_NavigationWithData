@@ -29,7 +29,8 @@ import com.example.navigasipage.data.OrderUIState
 enum class PengelolaHalaman {
     Home,
     Rasa,
-    Summary
+    Summary,
+    Form
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -58,8 +59,8 @@ fun ThaiTeaAppBar(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ThaiTeaApp(
-    viewModel: OrderViewModel = viewModel(),
-    navController: NavHostController = rememberNavController()
+        viewModel: OrderViewModel = viewModel(),
+        navController: NavHostController = rememberNavController()
 ) {
     Scaffold(
         topBar = {
@@ -74,8 +75,17 @@ fun ThaiTeaApp(
         ) {
             composable(route = PengelolaHalaman.Home.name) {
                 HalamanHome(onNextButtonLicked = {
-                    navController.navigate(PengelolaHalaman.Rasa.name)
+
+                    navController.navigate(PengelolaHalaman.Form.name)
                 }
+                )
+            }
+            composable(route = PengelolaHalaman.Form.name){
+                HalamanForm(
+                    onSubmitButtonClicked = {
+                        viewModel.setContact(it)
+                        navController.navigate(PengelolaHalaman.Rasa.name)
+                    }, onCancelButtonClicked = {navController.navigate(PengelolaHalaman.Home.name)}
                 )
             }
             composable(route = PengelolaHalaman.Rasa.name) {
@@ -105,7 +115,7 @@ private fun cancelOrderAndNavigateToHome(
     navController: NavHostController
 ) {
     viewModel.resetOrder()
-    navController.popBackStack(PengelolaHalaman.Home.name, inclusive = false)
+    navController.popBackStack(PengelolaHalaman.Form.name, inclusive = false)
 }
 
 private fun cancelOrderAndNavigateToRasa(
