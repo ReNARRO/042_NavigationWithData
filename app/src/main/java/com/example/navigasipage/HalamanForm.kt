@@ -60,8 +60,6 @@ fun HalamanForm(
                 fontSize = 25.sp,
                 fontWeight = FontWeight.Bold
             )
-        }
-        Column {
             OutlinedTextField(
                 value = nama,
                 onValueChange ={nama = it},
@@ -101,5 +99,6 @@ fun HalamanForm(
                 }
             }
         }
+
     }
 }
